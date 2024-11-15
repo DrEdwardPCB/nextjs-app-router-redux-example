@@ -1,0 +1,18 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+//component1 that uses redux
+'use client'
+
+import { decrement, increment } from "@/lib/features/counter/counterSlice"
+import { useAppSelector, useAppDispatch } from "@/lib/hook"
+
+export default function C1 (){
+    const count = useAppSelector((state) => state.counter.value)
+    const dispatch = useAppDispatch()
+    return (
+        <div className="flex items-center justify-center">
+            <button onClick={()=>dispatch(increment())}>+</button>
+            <button onClick={()=>dispatch(decrement())}>-</button>
+            <p>{count}</p>
+        </div>
+   )
+}
