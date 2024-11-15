@@ -32,6 +32,11 @@ except for the home page, all are having a counter builtin on one of the client 
 page.tsx by default is server side rendering but redux only works on client side, there is no global provider for next like in SPA (`app.tsx` or`_app.tsx` or `index.tsx`)style to configure all provider. There are multiple entry point by page. Thus setting Provider inside `page.tsx`. putting multiple provider in individual page would essentially work, but across page, state won't sync since react context (used by `react-redux`) would only update its descendent. This is where redux-persist comes into play. It introduce rehydrate process, which triggers update when serverside page is sent to client and initiate client-side rendering and save all the state change in a browser store in client. This could help synchronize state across multiple provider
 
 
+# limitation
+- Redux Thunk state is not serializable, with the power of SSR, for global state that require synchronize from webrequest, try to do so by using Fetch in react async component and pass to redux store.
+    - if state are local to a page route, use useEffect or useState
+    - if state are local to a route tree, ensure id is passable alone route and do a prefetch the backend using react async component to try to render the page 
+    - if request requires any client side credential, you need to use useEffect to inject the token into the request from clientSide component
 
 <details>
 <summary>next doc</summary>
